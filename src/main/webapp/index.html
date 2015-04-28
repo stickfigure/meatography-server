@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html lang="en" ng-app="meatography">
+	<head>
+		<meta charset="UTF-8" />
+
+		<title>Meatography</title>
+
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/semantic.min.css" />
+		<link rel="stylesheet" href="/css/meatography.css" />
+
+	</head>
+
+	<body class="ui material">
+		<div class="ui inverted menu">
+			<a class="active item">
+				<i class="home icon"></i> Meatography
+			</a>
+		</div>
+
+		<table class="ui table" ng-controller="GraphController as graph">
+			<thead>
+				<tr>
+					<th>When</th>
+					<th>Temperature</th>
+					<th>Humidity</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="measurement in graph.measurements">
+					<td>{{measurement.w | date:'yyyy-MM-dd @ h:mma'}}</td>
+					<td>{{measurement.t}}</td>
+					<td>{{measurement.h}}</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script>
+		<script src="app.js"></script>
+	</body>
+</html>

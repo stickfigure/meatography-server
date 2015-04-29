@@ -27,13 +27,7 @@ import static com.googlecode.objectify.ObjectifyService.factory;
 @Slf4j
 public class GuiceConfig extends GuiceServletContextListener {
 
-	/** This is a great place to set up Objectify */
-	static {
-		JodaTimeTranslators.add(factory());
-		factory().register(Day.class);
-	}
-
-	public static class OurServletModule extends ServletModule {
+	public static class MeatographyServletModule extends ServletModule {
 		@Override
 		protected void configureServlets() {
 			bind(ObjectifyFilter.class).in(Singleton.class);
@@ -44,7 +38,13 @@ public class GuiceConfig extends GuiceServletContextListener {
 		}
 	}
 
-	public static class OurBizModule extends AbstractModule {
+	public static class MeatographyModule extends AbstractModule {
+		/** This is a great place to set up Objectify */
+		static {
+			JodaTimeTranslators.add(factory());
+			factory().register(Day.class);
+		}
+
 		@Override
 		protected void configure() {
 			bind(Measurements.class);
@@ -62,6 +62,6 @@ public class GuiceConfig extends GuiceServletContextListener {
 
 	@Override
 	protected Injector getInjector() {
-		return Guice.createInjector(new OurServletModule(), new OurBizModule());
+		return Guice.createInjector(new MeatographyServletModule(), new MeatographyModule());
 	}
 }

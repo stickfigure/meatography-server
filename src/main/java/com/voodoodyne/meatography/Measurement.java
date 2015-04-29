@@ -23,4 +23,11 @@ public class Measurement {
 	/** */
 	@JsonProperty("w")
 	private DateTime when;
+
+	/**
+	 * @return true if the other measurement has the same values (ignoring date)
+	 */
+	public boolean sameMeasures(Measurement other) {
+		return temperature == other.temperature && humidity == other.humidity;
+	}
 }

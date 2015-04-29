@@ -74,4 +74,13 @@ public class Day {
 
 		return measurements;
 	}
+
+	/**
+	 * Append all of our internal data to the chart
+	 */
+	public void addTo(ChartData data) {
+		data.getTemperature().addAll(temperature);
+		data.getHumidity().addAll(humidity);
+		data.getWhen().addAll(when);
+	}
 }

@@ -35,6 +35,24 @@ public class Measurements {
 	}
 
 	/**
+	 * @return all measurements in a funky format that makes dygraphs happy and just happens to be
+	 * close to the native storage representation. We're trying to make this as efficient as possible
+	 * so we can display tens of thousands of points.
+	 */
+	@GET
+	@Path("/funky")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ChartData getFunky() {
+		ChartData data = new ChartData();
+
+		for (Day day : ofy().load().type(Day.class)) {
+			day.addTo(data);
+		}
+
+		return data;
+	}
+
+	/**
 	 * Add one measurement to our database. Date is the date posted, not the date submitted (which is ignored).
 	 */
 	@POST

@@ -4,14 +4,32 @@
 (function() {
 	var app = angular.module('meatography', []);
 
-	app.controller('GraphController', ['$http', function ($http) {
+	app.controller('GraphController', function ($scope, $http) {
 		var graph = this;
 		graph.measurements = [];
 
+		$scope.graph = {
+			data: [],
+			opts: {
+				labels: []
+			}
+		};
+
 		$http.get("measurements/funky").success(function (data) {
 			graph.measurements = data;
+
+			$scope.graph = {
+				data: [
+					[new Date(), 25.3, 12.9],
+					[new Date(), 29.3, 8.9]
+				],
+				opts: {
+					labels: ["date", "temperature", "humidity"]
+				}
+			};
+
 		});
-	}]);
+	});
 
 	// Borrowed from https://github.com/robotnic/angular-dygraphs/blob/master/js/dygraphs-directive.js
 	app.directive('dygraph', function() {

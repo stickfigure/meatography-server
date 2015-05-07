@@ -10,16 +10,25 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/1.12.0/semantic.min.css" />
 		<link rel="stylesheet" href="/css/meatography.css" />
 
+		<style>
+			.graph {
+				position: absolute;
+				width: 100%;
+				bottom: 0;
+				top: 4em;
+			}
+		</style>
+
 	</head>
 
 	<body class="ui material">
-		<div class="ui inverted menu">
+		<div class="ui fixed inverted menu">
 			<a class="active item">
 				<i class="home icon"></i> Meatography
 			</a>
 		</div>
 
-		<div ng-controller="GraphController">
+		<div ng-controller="GraphController as graph">
 			<dygraph data="graph.data" opts="graph.opts"></dygraph>
 		</div>
 

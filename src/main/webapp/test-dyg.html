@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+
+		<style>
+			#graph {
+				position: absolute;
+				width: 100%;
+				top: 0;
+				bottom: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="graph"></div>
+
+		<script src="//cdnjs.cloudflare.com/ajax/libs/dygraph/1.1.0/dygraph-combined.js"></script>
+		<script>
+			var date1 = new Date();
+			var date2 = new Date(date1.getTime() + 1000000);
+			var date3 = new Date(date2.getTime() + 1000000);
+
+			new Dygraph(
+				document.getElementById("graph"),
+				[
+					[date1, 25.3, 12.9],
+					[date2, 29.3, 8.9],
+					[date3, 5.3, 21.9]
+				],
+				{
+					labels: ["date", "temperature", "humidity"]
+				}
+			);
+		</script>
+	</body>
+</html>

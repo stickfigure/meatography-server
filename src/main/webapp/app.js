@@ -4,43 +4,42 @@
 (function() {
 	var app = angular.module('meatography', []);
 
-	app.controller('GraphController', function ($scope, $http) {
+	app.controller('GraphController', ["$http", function ($http) {
 		var graph = this;
-		graph.measurements = [];
-
-		$scope.graph = {
-			data: [],
-			opts: {
-				labels: []
-			}
+		graph.data = [
+			[new Date(), 1, 1],
+		];
+		graph.opts = {
+			labels: ["Date", "Temp", "Humidity"]
 		};
 
 		$http.get("measurements/funky").success(function (data) {
-			graph.measurements = data;
+			function farenheit(centigrade) {
+				return centigrade * 1.8 + 32;
+			}
 
-			$scope.graph = {
-				data: [
-					[new Date(), 25.3, 12.9],
-					[new Date(), 29.3, 8.9]
-				],
-				opts: {
-					labels: ["date", "temperature", "humidity"]
-				}
+			graph.data = [];
+
+			for (var i = 0; i < data.when.length; i++) {
+				graph.data.push([new Date(data.when[i]), farenheit(data.temperature[i]), data.humidity[i]]);
 			};
 
+			graph.opts = {
+				labels: ["Date", "Temp", "Humidity"]
+			};
 		});
-	});
+	}]);
 
 	// Borrowed from https://github.com/robotnic/angular-dygraphs/blob/master/js/dygraphs-directive.js
 	app.directive('dygraph', function() {
 		return {
 			restrict: 'E', // Use as element
-			scope: { // Isolate scope
-				data: '=', // Two-way bind data to local scope
+			scope: {
+				data: '=',
 				opts: '=?', // '?' means optional
-				view: '=' // '?' means optional
+				view: '=?' // '?' means optional
 			},
-			template: "<div></div>", // We need a div to attach graph to
+			template: "<div class='graph'></div>", // We need a div to attach graph to
 			link: function(scope, elem, attrs) {
 				var graph = new Dygraph(elem.children()[0], scope.data, scope.opts);
 
